@@ -1,0 +1,200 @@
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+// Estrutura base
+struct CalculadoraBase {
+    double (*somar)(double, double);
+    double (*subtrair)(double, double);
+    double (*multiplicar)(double, double);
+    double (*dividir)(double, double);
+};
+
+// Estrutura estendida (científica)
+struct CalculadoraCientifica {
+    struct CalculadoraBase base;
+    double (*potencia)(double, double);
+    double (*raiz)(double);
+    double (*logaritmo)(double);
+    double (*seno)(double);
+    double (*cosseno)(double);
+    double (*tangente)(double);
+};
+
+// Funções básicas
+double somar(double a, double b) { return a + b; }
+double subtrair(double a, double b) { return a - b; }
+double multiplicar(double a, double b) { return a * b; }
+double dividir(double a, double b) {
+    if (b == 0) {
+        printf("Erro: divisao por zero!\n");
+        return 0;
+    }
+    return a / b;
+}
+
+// Funções científicas
+double potencia(double base, double expoente) { return pow(base, expoente); }
+double raiz(double valor) {
+    if (valor < 0) {
+        printf("Erro: raiz de numero negativo!\n");
+        return 0;
+    }
+    return sqrt(valor);
+}
+double logaritmo(double valor) {
+    if (valor <= 0) {
+        printf("Erro: logaritmo de numero nao positivo!\n");
+        return 0;
+    }
+    return log10(valor);
+}
+double seno(double angulo) { return sin(angulo); }
+double cosseno(double angulo) { return cos(angulo); }
+double tangente(double angulo) { return tan(angulo); }
+
+// Função para inicializar a calculadora
+void inicializarCalculadora(struct CalculadoraCientifica* calc) {
+    calc->base.somar = somar;
+    calc->base.subtrair = subtrair;
+    calc->base.multiplicar = multiplicar;
+    calc->base.dividir = dividir;
+    calc->potencia = potencia;
+    calc->raiz = raiz;
+    calc->logaritmo = logaritmo;
+    calc->seno = seno;
+    calc->cosseno = cosseno;
+    calc->tangente = tangente;
+}
+
+// Função principal
+int main() {
+    struct CalculadoraCientifica calc;
+    inicializarCalculadora(&calc);
+
+    int opcao = -1;
+    double a = 0, b = 0, resultado = 0;
+    char historico[100][100];
+    int contador = 0;
+
+    printf("=== CALCULADORA CIENTIFICA EM C ===\n");
+
+    do {
+        printf("\nEscolha uma opcao:\n");
+        printf("1 - Soma\n");
+        printf("2 - Subtracao\n");
+        printf("3 - Multiplicacao\n");
+        printf("4 - Divisao\n");
+        printf("5 - Potencia\n");
+        printf("6 - Raiz quadrada\n");
+        printf("7 - Logaritmo base 10\n");
+        printf("8 - Seno\n");
+        printf("9 - Cosseno\n");
+        printf("10 - Tangente\n");
+        printf("11 - Mostrar historico\n");
+        printf("0 - Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        char registro[100];
+
+        switch (opcao) {
+            case 1:
+                printf("Digite dois numeros: ");
+                scanf("%lf %lf", &a, &b);
+                resultado = calc.base.somar(a, b);
+                sprintf(registro, "%.2lf + %.2lf = %.4lf", a, b, resultado);
+                break;
+
+            case 2:
+                printf("Digite dois numeros: ");
+                scanf("%lf %lf", &a, &b);
+                resultado = calc.base.subtrair(a, b);
+                sprintf(registro, "%.2lf - %.2lf = %.4lf", a, b, resultado);
+                break;
+
+            case 3:
+                printf("Digite dois numeros: ");
+                scanf("%lf %lf", &a, &b);
+                resultado = calc.base.multiplicar(a, b);
+                sprintf(registro, "%.2lf * %.2lf = %.4lf", a, b, resultado);
+                break;
+
+            case 4:
+                printf("Digite dois numeros: ");
+                scanf("%lf %lf", &a, &b);
+                resultado = calc.base.dividir(a, b);
+                sprintf(registro, "%.2lf / %.2lf = %.4lf", a, b, resultado);
+                break;
+
+            case 5:
+                printf("Digite a base e o expoente: ");
+                scanf("%lf %lf", &a, &b);
+                resultado = calc.potencia(a, b);
+                sprintf(registro, "%.2lf ^ %.2lf = %.4lf", a, b, resultado);
+                break;
+
+            case 6:
+                printf("Digite o numero: ");
+                scanf("%lf", &a);
+                resultado = calc.raiz(a);
+                sprintf(registro, "raiz(%.2lf) = %.4lf", a, resultado);
+                break;
+
+            case 7:
+                printf("Digite o numero: ");
+                scanf("%lf", &a);
+                resultado = calc.logaritmo(a);
+                sprintf(registro, "log10(%.2lf) = %.4lf", a, resultado);
+                break;
+
+            case 8:
+                printf("Digite o angulo em radianos: ");
+                scanf("%lf", &a);
+                resultado = calc.seno(a);
+                sprintf(registro, "sin(%.2lf) = %.4lf", a, resultado);
+                break;
+
+            case 9:
+                printf("Digite o angulo em radianos: ");
+                scanf("%lf", &a);
+                resultado = calc.cosseno(a);
+                sprintf(registro, "cos(%.2lf) = %.4lf", a, resultado);
+                break;
+
+            case 10:
+                printf("Digite o angulo em radianos: ");
+                scanf("%lf", &a);
+                resultado = calc.tangente(a);
+                sprintf(registro, "tan(%.2lf) = %.4lf", a, resultado);
+                break;
+
+            case 11:
+                printf("\n=== HISTORICO DE OPERACOES ===\n");
+                if (contador == 0) {
+                    printf("Nenhuma operacao realizada ainda.\n");
+                } else {
+                    for (int i = 0; i < contador; i++) {
+                        printf("%d) %s\n", i + 1, historico[i]);
+                    }
+                }
+                continue;
+
+            case 0:
+                printf("Encerrando calculadora...\n");
+                continue;
+
+            default:
+                printf("Opcao invalida!\n");
+                continue;
+        }
+
+        // Armazena no histórico
+        strcpy(historico[contador], registro);
+        contador++;
+        printf("Resultado: %.4lf\n", resultado);
+
+    } while (opcao != 0);
+
+    return 0;
+}

@@ -43,7 +43,7 @@ int main() {
     densidade1 = populacao1 / area1;
     PibperCapita1 = (pib1 * 1000000000) / populacao1; // PIB está em bilhões
 
-    // ======== CARTA 2 ========
+    // ======== CARTA 
     printf("\n=== Cadastro da Carta 2 ===\n");
     printf("Estado: (A-H)");
     scanf(" %c", &estado2);
@@ -66,11 +66,11 @@ int main() {
     printf("Numero de pontos turisticos: ");
     scanf("%d", &pontosTuristicos2);
 
-    // Cálculos da carta 2
+
     densidade2 = populacao2 / area2;
     PibperCapita2 = (pib2 * 1000000000) / populacao2;
 
-    // ======== EXIBIÇÃO ========
+
     printf("\n\n=== RESULTADOS ===\n");
 
     printf("\nCarta 1:\n");
