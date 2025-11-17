@@ -3,6 +3,7 @@
 #include <string.h>
 
 // Estrutura base
+
 struct CalculadoraBase {
     double (*somar)(double, double);
     double (*subtrair)(double, double);
@@ -11,6 +12,7 @@ struct CalculadoraBase {
 };
 
 // Estrutura estendida (científica)
+
 struct CalculadoraCientifica {
     struct CalculadoraBase base;
     double (*potencia)(double, double);
@@ -22,9 +24,11 @@ struct CalculadoraCientifica {
 };
 
 // Funções básicas
+
 double somar(double a, double b) { return a + b; }
 double subtrair(double a, double b) { return a - b; }
 double multiplicar(double a, double b) { return a * b; }
+
 double dividir(double a, double b) {
     if (b == 0) {
         printf("Erro: divisao por zero!\n");
@@ -34,7 +38,9 @@ double dividir(double a, double b) {
 }
 
 // Funções científicas
+
 double potencia(double base, double expoente) { return pow(base, expoente); }
+
 double raiz(double valor) {
     if (valor < 0) {
         printf("Erro: raiz de numero negativo!\n");
@@ -42,6 +48,7 @@ double raiz(double valor) {
     }
     return sqrt(valor);
 }
+
 double logaritmo(double valor) {
     if (valor <= 0) {
         printf("Erro: logaritmo de numero nao positivo!\n");
@@ -49,16 +56,19 @@ double logaritmo(double valor) {
     }
     return log10(valor);
 }
+
 double seno(double angulo) { return sin(angulo); }
 double cosseno(double angulo) { return cos(angulo); }
 double tangente(double angulo) { return tan(angulo); }
 
-// Função para inicializar a calculadora
+// Inicialização
+
 void inicializarCalculadora(struct CalculadoraCientifica* calc) {
     calc->base.somar = somar;
     calc->base.subtrair = subtrair;
     calc->base.multiplicar = multiplicar;
     calc->base.dividir = dividir;
+
     calc->potencia = potencia;
     calc->raiz = raiz;
     calc->logaritmo = logaritmo;
@@ -67,17 +77,19 @@ void inicializarCalculadora(struct CalculadoraCientifica* calc) {
     calc->tangente = tangente;
 }
 
-// Função principal
+// Programa principal
+
 int main() {
     struct CalculadoraCientifica calc;
     inicializarCalculadora(&calc);
 
     int opcao = -1;
     double a = 0, b = 0, resultado = 0;
+
     char historico[100][100];
     int contador = 0;
 
-    printf("=== CALCULADORA CIENTIFICA EM C ===\n");
+    printf("CALCULADORA CIENTIFICA EM C\n");
 
     do {
         printf("\nEscolha uma opcao:\n");
@@ -94,6 +106,7 @@ int main() {
         printf("11 - Mostrar historico\n");
         printf("0 - Sair\n");
         printf("Opcao: ");
+
         scanf("%d", &opcao);
 
         char registro[100];
@@ -189,9 +202,9 @@ int main() {
                 continue;
         }
 
-        // Armazena no histórico
         strcpy(historico[contador], registro);
         contador++;
+
         printf("Resultado: %.4lf\n", resultado);
 
     } while (opcao != 0);

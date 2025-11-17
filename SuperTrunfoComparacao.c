@@ -6,11 +6,11 @@ int main() {
     // Estrutura de dados para armazenar as cartas
 
     char estado1[50], codigo1[50], nome1[50];
-    int populacao1, pontosTuristicos1;
+    int populacao1, PontosTuristicos1;
     float area1, pib1;
 
     char estado2[50], codigo2[50], nome2[50];
-    int populacao2, pontosTuristicos2;
+    int populacao2, PontosTuristicos2;
     float area2, pib2;
 
     // Cadastro da Carta 1
@@ -35,7 +35,7 @@ int main() {
     scanf("%f", &pib1);
 
     printf("Numero de pontos turisticos: ");
-    scanf("%d", &pontosTuristicos1);
+    scanf("%d", &PontosTuristicos1);
 
     // Cadastro da Carta 2
 
@@ -59,7 +59,7 @@ int main() {
     scanf("%f", &pib2);
 
     printf("Numero de pontos turisticos: ");
-    scanf("%d", &pontosTuristicos2);
+    scanf("%d", &PontosTuristicos2);
 
     // Cálculos
 
@@ -78,7 +78,6 @@ int main() {
     // Comparação
 
     printf("\n=== Comparacao de Cartas (Atributo: %s) ===\n\n", atributoNome);
-
     printf("Carta 1 - %s (%s): %.2f\n", nome1, estado1, atributo1);
     printf("Carta 2 - %s (%s): %.2f\n\n", nome2, estado2, atributo2);
 
